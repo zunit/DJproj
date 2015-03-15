@@ -1,0 +1,11 @@
+<Alloy>
+    <Collection src="users"/>
+    <Window class="container">
+        <TableView dataCollection="users">
+        	<!-- title="{name} - {age}" -->
+            <TableViewRow age="{age}" onClick="fuck" id="rowselect">
+            	<View id="view" backgroundColor="red" width="20" height="20"/>
+            </TableViewRow>
+        </TableView>
+    </Window>
+</Alloy>
