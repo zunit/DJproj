@@ -124,6 +124,7 @@ function namedisplay(namedata){
 
 function profiledisplay(data_load){
 	return Ti.UI.createImageView({
+		name: data_load.name,
 		image: data_load.profile_picture,
 		height: 48,
 		width: 48,
@@ -149,15 +150,35 @@ for (i = 0; i < custom_data.length; i++){
 	var profile_picture = profiledisplay(custom_data[i]);
 	var name = namedisplay(custom_data[i]);
 	
+	// making picture clickable and transition
+	profile_picture.addEventListener('click', function(e){
+		//alert("picture clicked!");	
+		var selectperson = e.source;
+		var args = {
+			name: selectperson.name,
+			image: selectperson.image
+		};
+		
+		// deciding which 
+		if (Titanium.Platform.name == 'android') {
+   	 		
+		} else {
+			win.close();
+		}
+		
+		// iOS only! win.close();
+		// add wind tab in profile detail!!
+		var profile = Alloy.createController("profiledetails", args).getView();
+    	profile.open();
+	});
+	
 	// if we can talk to the user
 	if (custom_data[i].points == -1){
 		var last_message = messagedisplay(custom_data[i]);	
 		row.add(last_message);
 	} else {
 		// have to unlock with points 
-		// case 1 enough points 
-		// this is a button 
-		
+
 		// this creates the label
 		var unlock = Ti.UI.createLabel({
 			text: "Unlock " + custom_data[i].points + " points",
@@ -171,7 +192,6 @@ for (i = 0; i < custom_data.length; i++){
 		row.add(unlock);
 		// case 2 not enough points 		
 	}
-	
 	
 	row.height = 60;
 	row.add(profile_picture);
@@ -190,7 +210,7 @@ var table = Titanium.UI.createTableView({
 });  
 
 // click button
-table.addEventListener('click', function(e) {
+/*table.addEventListener('click', function(e) {
 	if (e.rowData.points == -1){
 		alert("you received a message!");
 	}
@@ -201,7 +221,7 @@ table.addEventListener('click', function(e) {
 	} else {
     	alert("not enough points! You need " + (e.rowData.points - mypoints) + " points!");
     }
-});
+});*/
 
 view.add(table);
 win.add(view);
